@@ -25,7 +25,7 @@ def main():
     truck_graph.add_edge(4, 6, 7)
     truck_graph.add_edge(5, 6, 3)
 
-    truck_cities = [0, 1, 2, 3, 4, 5, 6]
+    truck_cities = [0, 1, 2, 3, 4, 5, 6, 7]
     roads = truck_graph.edges
     start_city = 0
     truck_dijkstra(truck_cities, roads, start_city)

@@ -63,8 +63,8 @@ def truck_dijkstra(cities: list[int], roads: list[list[tuple]], start_city: int)
         # Initialize list containing immediate predecessor of each city
         parents = [-1 for city in cities]
 
-        # Initialize list of the best height itineraries from start_city to all other cities as negative infinity
-        best_heights = [-sys.maxsize - 1 for city in cities]
+        # Initialize list of the best height itineraries from start_city to all other cities as 0
+        best_heights = [0 for city in cities]
         best_heights[start_city] = sys.maxsize
 
         # Initialize max heap to hold cities where key is the current best height to that city
