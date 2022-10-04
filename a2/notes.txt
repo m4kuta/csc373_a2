@@ -1,0 +1,51 @@
+dijkstra(G(V, E))
+    R = {s}
+    d(s) = 0
+
+    NR = empty min heap
+
+    for node v in V:
+        if v == s:
+            continue
+        if get_edge(s,v) == None:
+            d(v) = max_int
+        else:
+            d(v) = edge(s, v).weight
+
+        NR.add(v) with d(v) as key
+
+    while R != V:
+        u = NR.extract_min()
+        R = R.add(u)
+
+        for node v in V:
+            if get_edge(u, v) != None and d(v) > d(u) + get_edge(u, v).weight:
+                d(v) = get_edge(u, v).weight
+                NR.change_key(v, d(v))
+
+dijkstra(G(Cities, Roads), itinerary, trucks,)
+    R = {s}
+    d(s) = 0
+
+    NR = empty min heap
+
+    for node v in V:
+        if v == s:
+            continue
+        if get_edge(s,v) == None:
+            d(v) = max_int
+        else:
+            d(v) = edge(s, v).weight
+
+        NR.add(v) with d(v) as key
+
+    while R != V:
+        u = NR.extract_min()
+        R = R.add(u)
+
+        for node v in V:
+            if get_edge(u, v) != None and d(v) > d(u) + get_edge(u, v).weight:
+                d(v) = get_edge(u, v).weight
+                NR.change_key(v, d(v))
+
+
