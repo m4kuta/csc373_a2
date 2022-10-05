@@ -27,9 +27,6 @@ def vanilla_dijkstra(cities: list[int], roads: list[list[tuple]], start_city: in
         # Get the head of the priority queue (neighbouring city with the least distance to start_city)
         (curr_dist, curr_city) = pq.get()
 
-        # Add it to the set of visited cities
-        # visited.add(curr_city)
-
         # Iterate over each road from the curr_city to its neighbouring cities
         for curr_road in roads[curr_city]:
             curr_dest = curr_road[0]
@@ -79,7 +76,7 @@ def truck_dijkstra(cities: list[int], roads: list[list[tuple]], start_city: int)
 
     # While not all the cities have been visited
     while len(max_heap) > 0:
-        # Get and set next city with the best height as curr_city
+        # Get and set next city with the greatest best height as curr_city
         (best_height_to_curr_city, curr_city) = heappop(max_heap)
 
         # Iterate over each road from the curr_city to its neighbours
@@ -94,23 +91,17 @@ def truck_dijkstra(cities: list[int], roads: list[list[tuple]], start_city: int)
                 best_heights[next_city] = new_height_to_next_city
                 # Set curr_city as predecessor of next_city
                 parents[next_city] = curr_city
-                # Update next_city's key in the max_heap with its new best height
-                max_heap = update_heap(max_heap, next_city, best_heights[next_city])
+                # Update next_city's key in max_heap with its new best height
+                max_heap = heap_update_key(max_heap, next_city, best_heights[next_city])
 
+    print_itineraries(cities, best_heights, parents)
+
+
+def print_itineraries(cities, best_heights, parents):
     for city in cities:
         itineraries = 'Itinerary to city {0}:\n    Best height: {1}\n    Path: {2}'.format(
             city, best_heights[city], get_path(city, parents))
         print(itineraries)
-
-
-def update_heap(max_heap, target, new_key):
-    new_heap = []
-    while len(max_heap) > 0:
-        (height_to_next_city, city) = heappop(max_heap)
-        if city != target:
-            heappush(new_heap, (height_to_next_city, city))
-    heappush(new_heap, (new_key, target))
-    return new_heap
 
 
 def get_path(curr_city: int, parents: list):
@@ -120,3 +111,13 @@ def get_path(curr_city: int, parents: list):
         path.insert(0, parent)
         parent = parents[parent]
     return path
+
+
+def heap_update_key(max_heap, target, new_key):
+    new_heap = []
+    while len(max_heap) > 0:
+        (height_to_next_city, city) = heappop(max_heap)
+        if city != target:
+            heappush(new_heap, (height_to_next_city, city))
+    heappush(new_heap, (new_key, target))
+    return new_heap
