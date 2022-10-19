@@ -14,6 +14,7 @@ def min_path_sum(V, V_charger, E, s, t, d):
     n = len(V)
     distances = copy.deepcopy(E)
     charges = copy.deepcopy(E)
+    parents = [-1] * n
 
     for i in range(n):
         for j in range(n):
@@ -33,7 +34,10 @@ def min_path_sum(V, V_charger, E, s, t, d):
                     if j in V_charger:
                         charges[i][j] = d
                     else:
+                        charges[i][k] = charges[i][k] - distances[i][k]
                         charges[i][j] = charges[i][k] - distances[k][j]
+
+                    parents[j] = k
 
     print("Optimal distances")
     for row in distances:
@@ -46,6 +50,9 @@ def min_path_sum(V, V_charger, E, s, t, d):
     print()
 
     print("Min distance from s to t:", distances[s][t])
+
+    print("Path:", get_path(t, parents))
+
     return distances[s][t]
 
 def get_path(curr_city: int, parents: list):
@@ -60,19 +67,19 @@ def get_path(curr_city: int, parents: list):
 ### TEST ###
 inf = float('inf')
 
-V = [0, 1, 2, 3, 4, 5]
-V_charge = [0, 3, 4, 5]
-E = [[000, 200, 300, 400, inf, inf],
-     [inf, 000, 200, 100, inf, inf],
-     [inf, inf, 000, inf, inf, 250],
-     [inf, inf, inf, 000, 200, inf],
-     [inf, inf, 100, inf, 000, 400],
-     [inf, inf, inf, inf, inf, 000]]
-s = 0
-t = 5
-d = 400
-min_path_sum(V, V_charge, E, s, t, d)
-print()
+# V = [0, 1, 2, 3, 4, 5]
+# V_charge = [0, 3, 4, 5]
+# E = [[000, 200, 300, 400, inf, inf],
+#      [inf, 000, 200, 100, inf, inf],
+#      [inf, inf, 000, inf, inf, 250],
+#      [inf, inf, inf, 000, 200, inf],
+#      [inf, inf, 100, inf, 000, 400],
+#      [inf, inf, inf, inf, inf, 000]]
+# s = 0
+# t = 5
+# d = 400
+# min_path_sum(V, V_charge, E, s, t, d)
+# print()
 
 V = [0, 1, 2, 3, 4, 5]
 V_charge = [0, 1, 3, 4, 5]
